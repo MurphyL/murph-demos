@@ -1,0 +1,35 @@
+version: '3'
+services:
+  dolphin: # 调度器
+    image: rockxsj/dolphinscheduler:latest
+    container_name: "scheduler"
+    command: 
+      - all
+    environment:
+      ZOOKEEPER_QUORUM: ${HOST_IP}:${ZK_PORT}
+      ZOOKEEPER_ROOT: ${ZK_ROOT}
+      DATABASE_HOST: ${HOST_IP}
+      DATABASE_PORT: ${DB_PORT}
+      DATABASE_USERNAME: ${DB_USER}
+      DATABASE_PASSWORD: ${DB_USER}
+      DATABASE_DATABASE: ${DB_NAME}
+    depends_on:
+      - postgres
+    ports:
+      - ${WEB_UI_PORT}:${WEB_UI_PORT}
+
+  postgres: # 数据库
+    image: postgres:latest
+    container_name: "postgres"
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_USER}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - ${DB_PORT}:${DB_PORT}
+
+  zookeeper: # 数据库
+    image: zookeeper:latest
+    container_name: "zookeeper"
+    ports:
+      - ${ZK_PORT}:${ZK_PORT}
