@@ -1,16 +1,36 @@
 version: '3'
 services:
-  elasticsearch: 
+  es_demo: 
     image: elasticsearch:latest
-    container_name: "elasticsearch"
+    container_name: "es_demo"
     volumes:
-      - ./config/elasticsearch:/usr/share/elasticsearch/config
+      - ./${ES_CONFIG}:${ES_ROOT}/${ES_CONFIG}
     ports:
       - ${ES_REST_PORT}:${ES_REST_PORT}
       - ${ES_MAIN_PORT}:${ES_MAIN_PORT}
-  elasticvue:
-    image: cars10/elasticvue:latest
-    container_name: "elasticvue_ui"
+      
+  elastic_head:
+    image: mobz/elasticsearch-head:5
+    container_name: "es_head"
     ports:
-      - ${ADMIN_OUT_PORT}:${ADMIN_IN_PORT}
+      - ${HEAD_PORT}:${HEAD_PORT}
 
+#  elasticvue:
+#    image: cars10/elasticvue:latest
+#    container_name: "elasticvue_ui"
+#    ports:
+#      - ${ADMIN_UI_PORT}:${ADMIN_IN_PORT}
+
+#  kibana:
+#    image: kibana:latest
+#    container_name: "kibana"
+#    ports:
+#      - ${KINBANA_PORT}:${KINBANA_PORT}
+#    volumes:
+#      - ./${KINBANA_CONFIG}:${KINBANA_ROOT}/${KINBANA_CONFIG}
+      
+#  dejavu:
+#    image: appbaseio/dejavu:latest
+#    container_name: "dejavu"
+#    ports:
+#      - ${DEJAVU_PORT}:${DEJAVU_PORT}
