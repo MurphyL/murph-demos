@@ -1,0 +1,16 @@
+version: '3'
+services:
+  elasticsearch: 
+    image: elasticsearch:latest
+    container_name: "elasticsearch"
+    volumes:
+      - ./config/elasticsearch:/usr/share/elasticsearch/config
+    ports:
+      - ${ES_REST_PORT}:${ES_REST_PORT}
+      - ${ES_MAIN_PORT}:${ES_MAIN_PORT}
+  elasticvue:
+    image: cars10/elasticvue:latest
+    container_name: "elasticvue_ui"
+    ports:
+      - ${ADMIN_OUT_PORT}:${ADMIN_IN_PORT}
+
